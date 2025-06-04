@@ -11,6 +11,14 @@ The sandbox provides a complete containerized Linux environment with:
 - Full file system access
 - Full sudo access
 
+## Local Sandbox Fallback
+
+If the `DAYTONA_API_KEY` environment variable is not set, the backend will
+automatically start the sandbox defined in `docker/docker-compose.yml` using
+`docker compose`.  A lightweight object with the same interface as
+`daytona_sdk.Sandbox` is returned so existing tools continue to work when
+running locally.
+
 ## Customizing the Sandbox
 
 You can modify the sandbox environment for development or to add new capabilities:
