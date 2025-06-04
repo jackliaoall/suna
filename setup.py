@@ -297,7 +297,7 @@ def collect_llm_api_keys():
     model_aliases = {
         'OPENAI': ['openai/gpt-4o', 'openai/gpt-4o-mini'],
         'ANTHROPIC': ['anthropic/claude-3-7-sonnet-latest', 'anthropic/claude-3-5-sonnet-latest'],
-        'OPENROUTER': ['openrouter/google/gemini-2.5-pro-preview', 'openrouter/deepseek/deepseek-chat-v3-0324:free', 'openrouter/openai/gpt-4o-2024-11-20'],
+        'OPENROUTER': ['openrouter/deepseek/deepseek-chat', 'openrouter/google/gemini-2.5-pro-preview', 'openrouter/openai/gpt-4o-2024-11-20'],
     }
     
     for provider in selected_providers:
@@ -359,25 +359,25 @@ def collect_llm_api_keys():
                     for i, model in enumerate(model_aliases['OPENROUTER'], 1):
                         print(f"{Colors.CYAN}[{i}] {Colors.GREEN}{model}{Colors.ENDC}")
                     
-                    model_choice = input("Select default model (1-3) or press Enter for gemini-2.5-flash: ").strip()
+                    model_choice = input("Select default model (1-3) or press Enter for deepseek-chat: ").strip()
                     if not model_choice or model_choice == '1':
-                        model_info['default_model'] = 'openrouter/google/gemini-2.5-flash-preview'
+                        model_info['default_model'] = 'openrouter/deepseek/deepseek-chat'
                     elif model_choice.isdigit() and 1 <= int(model_choice) <= len(model_aliases['OPENROUTER']):
                         model_info['default_model'] = model_aliases['OPENROUTER'][int(model_choice) - 1]
                     else:
-                        model_info['default_model'] = 'openrouter/google/gemini-2.5-flash-preview'
-                        print_warning(f"Invalid selection, using default: openrouter/google/gemini-2.5-flash-preview")
+                        model_info['default_model'] = 'openrouter/deepseek/deepseek-chat'
+                        print_warning(f"Invalid selection, using default: openrouter/deepseek/deepseek-chat")
                     break
                 print_error("Invalid API key format. It should be at least 10 characters long.")
         
     # If no default model has been set, check which provider was selected and set an appropriate default
     if 'default_model' not in model_info:
-        if 'ANTHROPIC_API_KEY' in api_keys:
-            model_info['default_model'] = 'anthropic/claude-3-7-sonnet-latest'
+        if 'OPENROUTER_API_KEY' in api_keys:
+            model_info['default_model'] = 'openrouter/deepseek/deepseek-chat'
         elif 'OPENAI_API_KEY' in api_keys:
             model_info['default_model'] = 'openai/gpt-4o'
-        elif 'OPENROUTER_API_KEY' in api_keys:
-            model_info['default_model'] = 'openrouter/google/gemini-2.5-flash-preview'
+        elif 'ANTHROPIC_API_KEY' in api_keys:
+            model_info['default_model'] = 'deepseek-chat'
     
     print_success(f"Using {model_info['default_model']} as the default model")
     

@@ -8,7 +8,7 @@ import { useAvailableModels } from '@/hooks/react-query/subscriptions/use-model'
 export const STORAGE_KEY_MODEL = 'suna-preferred-model';
 export const STORAGE_KEY_CUSTOM_MODELS = 'customModels';
 export const DEFAULT_FREE_MODEL_ID = 'deepseek';
-export const DEFAULT_PREMIUM_MODEL_ID = 'claude-sonnet-4';
+export const DEFAULT_PREMIUM_MODEL_ID = 'deepseek-chat';
 
 export type SubscriptionStatus = 'no_subscription' | 'active';
 
@@ -114,8 +114,15 @@ export const MODELS = {
     lowQuality: false,
     description: 'GPT-4 - OpenAI\'s highly capable model with advanced reasoning'
   },
-  'deepseek-chat-v3-0324': { 
-    tier: 'premium', 
+  'deepseek-chat-v3-0324': {
+    tier: 'premium',
+    priority: 75,
+    recommended: true,
+    lowQuality: false,
+    description: 'DeepSeek Chat - Advanced AI assistant with strong reasoning'
+  },
+  'deepseek-chat': {
+    tier: 'premium',
     priority: 75,
     recommended: true,
     lowQuality: false,
