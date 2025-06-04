@@ -136,6 +136,10 @@ ENV_MODE=local
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+# When running `supabase start` locally you can use:
+# SUPABASE_URL=http://localhost:54321
+# SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJhbm9uIiwiaWF0IjowLCJleHAiOjQ3MzM4NTYwMDB9.GRdUpTw9BLUtllnzIE4WgLrSOnJZ7AmKJQ-8kLSuXJo
+# SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJzZXJ2aWNlX3JvbGUiLCJpYXQiOjAsImV4cCI6NDczMzg1NjAwMH0.SgqvhT_XuDH_Ax9tQYqnrgDcHTpGB8Rxz1z4clfWnbY
 
 # REDIS
 REDIS_HOST=redis
@@ -179,6 +183,9 @@ Example configuration:
 ```sh
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+# If running Supabase locally:
+# NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
+# NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJhbm9uIiwiaWF0IjowLCJleHAiOjQ3MzM4NTYwMDB9.GRdUpTw9BLUtllnzIE4WgLrSOnJZ7AmKJQ-8kLSuXJo
 NEXT_PUBLIC_BACKEND_URL=http://backend:8000/api
 NEXT_PUBLIC_URL=http://localhost:3000
 ```
