@@ -7,6 +7,7 @@ This guide provides detailed instructions for setting up and hosting your own in
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
 - [Installation Steps](#installation-steps)
+- [Running Supabase Locally](#running-supabase-locally)
 - [Manual Configuration](#manual-configuration)
 - [Post-Installation Steps](#post-installation-steps)
 - [Troubleshooting](#troubleshooting)
@@ -108,7 +109,26 @@ During setup, you'll need to:
    - Navigate to Project Settings → API
    - Add 'basejump' to the Exposed Schema section
 
-### 4. Daytona Configuration
+### 4. Running Supabase Locally
+
+To use Supabase without a remote project, you can start a local instance with the Supabase CLI. From the root of the repository run:
+
+```bash
+cd backend/supabase
+supabase start
+```
+
+This spins up Postgres and API services using the configuration in `backend/supabase/`. When running locally, set your environment variables to point to the local URL:
+
+```sh
+# backend/.env
+SUPABASE_URL=http://localhost:54321
+
+# frontend/.env.local
+NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
+```
+
+### 5. Daytona Configuration
 
 As part of the setup, you'll need to:
 
