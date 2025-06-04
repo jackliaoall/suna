@@ -584,10 +584,12 @@ def configure_frontend_env(env_vars, use_docker=True):
     print_success(f"Frontend .env.local file created at {env_path}")
     print_info(f"Backend URL is set to: {backend_url}")
 
-def setup_supabase():
+def setup_supabase(env_vars):
     """Setup Supabase database"""
     print_info("Setting up Supabase database...")
-    
+
+    use_local = input("Use local Supabase instance? (y/N): ").strip().lower() == 'y'
+
     # Check if the Supabase CLI is installed
     try:
         subprocess.run(
@@ -603,6 +605,60 @@ def setup_supabase():
         print_info("After installing, run this setup again")
         sys.exit(1)
     
+    if use_local:
+        supabase_dir = os.path.join('backend', 'supabase')
+        print_info("Starting local Supabase...")
+        try:
+            result = subprocess.run(
+                ['supabase', 'start'],
+                cwd=supabase_dir,
+                check=True,
+                capture_output=True,
+                text=True,
+                shell=IS_WINDOWS
+            )
+        except subprocess.SubprocessError as e:
+            print_error(f"Failed to start local Supabase: {e}")
+            sys.exit(1)
+
+        supabase_url = None
+        anon_key = None
+        service_role_key = None
+        for line in result.stdout.splitlines():
+            url_match = re.search(r'API URL:\s*(\S+)', line)
+            anon_match = re.search(r'anon key:\s*(\S+)', line, re.I)
+            service_match = re.search(r'service[_ ]role key:\s*(\S+)', line, re.I)
+            if url_match:
+                supabase_url = url_match.group(1)
+            if anon_match:
+                anon_key = anon_match.group(1)
+            if service_match:
+                service_role_key = service_match.group(1)
+
+        env_vars['supabase']['SUPABASE_URL'] = supabase_url or ''
+        env_vars['supabase']['SUPABASE_ANON_KEY'] = anon_key or ''
+        env_vars['supabase']['SUPABASE_SERVICE_ROLE_KEY'] = service_role_key or ''
+
+        os.environ['SUPABASE_URL'] = env_vars['supabase']['SUPABASE_URL']
+        os.environ['SUPABASE_ANON_KEY'] = env_vars['supabase']['SUPABASE_ANON_KEY']
+        os.environ['SUPABASE_SERVICE_ROLE_KEY'] = env_vars['supabase']['SUPABASE_SERVICE_ROLE_KEY']
+
+        backend_dir = os.path.join(os.getcwd(), 'backend')
+        try:
+            subprocess.run(
+                ['supabase', 'db', 'push'],
+                cwd=backend_dir,
+                check=True,
+                shell=IS_WINDOWS
+            )
+            print_success("Supabase database setup completed")
+        except subprocess.SubprocessError as e:
+            print_error(f"Failed to setup Supabase: {e}")
+            sys.exit(1)
+
+        save_env_data(env_vars)
+        return
+
     # Extract project reference from Supabase URL
     supabase_url = os.environ.get('SUPABASE_URL')
     if not supabase_url:
@@ -905,7 +961,7 @@ def main():
 
     if current_step <= 7:
         print_step(current_step, total_steps, "Setting up Supabase")
-        setup_supabase()
+        setup_supabase(env_vars)
         save_progress(current_step)
         current_step += 1
 
