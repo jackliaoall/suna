@@ -150,7 +150,7 @@ RABBITMQ_PORT=5672
 # LLM Providers
 ANTHROPIC_API_KEY=your-anthropic-key
 OPENAI_API_KEY=your-openai-key
-MODEL_TO_USE=anthropic/claude-3-7-sonnet-latest
+MODEL_TO_USE=deepseek-chat
 
 # WEB SEARCH
 TAVILY_API_KEY=your-tavily-key

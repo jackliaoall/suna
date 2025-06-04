@@ -114,8 +114,15 @@ export const MODELS = {
     lowQuality: false,
     description: 'GPT-4 - OpenAI\'s highly capable model with advanced reasoning'
   },
-  'deepseek-chat-v3-0324': { 
-    tier: 'premium', 
+  'deepseek-chat-v3-0324': {
+    tier: 'premium',
+    priority: 75,
+    recommended: true,
+    lowQuality: false,
+    description: 'DeepSeek Chat - Advanced AI assistant with strong reasoning'
+  },
+  'deepseek-chat': {
+    tier: 'premium',
     priority: 75,
     recommended: true,
     lowQuality: false,
